@@ -55,5 +55,5 @@ jobs:
         with:
           url: 'https://api.breu.ngrok.io/providers/github/artifact-ready'
           method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{QUANTUM_API_KEY}}"}'
+          customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
           data: '{"image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}", "repo id": ${{github.repository_id}}, "repo name":${{github.repository}}}'
