@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Release HelloWorld
 on: [push, workflow_dispatch]
  
 jobs:
@@ -47,5 +47,5 @@ jobs:
         with:
           push: true
           tags: |
-            asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/ctrlplane-api:${{ steps.vars.outputs.short_sha }}
-            asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/ctrlplane-api:latest
+            asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}
+            asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest
