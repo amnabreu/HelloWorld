@@ -22,8 +22,8 @@ jobs:
           docker tag helloworld:latest asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest
           docker tag helloworld:latest asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }} 
 
-      - name: docker ps
-        run: docker ps
+      - name: docker ls
+        run: docker image ls
 
       - name: Authenticate with GCP
         id: auth
@@ -50,10 +50,10 @@ jobs:
             asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}
             asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest
 
-      - name: Deploy Stage
+      - name: Artifact ready notification
         uses: fjogeleit/http-request-action@v1
         with:
           url: 'https://api.breu.ngrok.io/providers/github/artifact-ready'
           method: 'POST'
-          customHeaders: '{"Content-Type": "application/json", "X-API-KEY", "${{ secrets.QUANTUM_API_KEY }}"}'
-          data: '{"image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}", "repo id": github.repository_id, "repo name":github.repository}'
+          customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
+          data: '{"image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}", "repo id": ${{github.repository_id}}, "repo name":${{github.repository}}}'
