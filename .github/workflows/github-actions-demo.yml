@@ -1,5 +1,5 @@
 name: Release HelloWorld
-on: [push, workflow_dispatch]
+on: [pull_request, workflow_dispatch]
  
 jobs:
   release-artifact:
@@ -49,3 +49,11 @@ jobs:
           tags: |
             asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}
             asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest
+
+      - name: Deploy Stage
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://api.breu.ngrok.io/providers/github/artifact-ready'
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "X-API-KEY", "${{ secrets.QUANTUM_API_KEY }}"}'
+          data: '{"image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}", "repo id": github.repository_id, "repo name":github.repository}'
