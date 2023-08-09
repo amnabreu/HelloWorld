@@ -49,6 +49,7 @@ jobs:
           tags: |
             asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}
             asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest
+          labels: "1.0.0"
 
       - name: Artifact ready notification
         uses: fjogeleit/http-request-action@v1
