@@ -56,5 +56,5 @@ jobs:
           url: 'https://api.breu.ngrok.io/providers/github/artifact-ready'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
-          data: '{"key_1": "value_1", "key_2": "value_2" , "key_3": "value_3"}'
+          data: '{"key_1": "value_1", "key_2": "value_2"}'
 
