@@ -58,11 +58,11 @@ jobs:
           customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
           data: |
                 '{
-                 "pull_request_id" : ${{github.event.pull_request.id}}
+                 "pull_request_id" : "${{github.event.pull_request.id}}"
                  "image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}", 
-                  "repo_id": ${{github.repository_id}},
+                  "repo_id": "${{github.repository_id}}",
                   "registry":"GCPArtifactRegistry"
-                  "digest": ${{steps.docker-push-tagged.outputs.digest}}
-                  "installation_id":${{ secrets.QUANTUM_APP_INSTALLATION_ID }}
+                  "digest": "${{steps.docker-push-tagged.outputs.digest}}"
+                  "installation_id": "${{ secrets.QUANTUM_APP_INSTALLATION_ID }}"
                   
                   }'
