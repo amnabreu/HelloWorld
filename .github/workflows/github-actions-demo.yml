@@ -63,6 +63,6 @@ jobs:
                   "repo id": ${{github.repository_id}},
                   "registry":"GCPArtifactRegistry"
                   "digest": ${{steps.docker-push-tagged.outputs.digest}}
-                  "installation_id":${{ secrets.QUANTUM_APP_INSTALLATION_ID }}
+                  "installation_id":${{ github.event.installation.id }}
                   
                   }'
