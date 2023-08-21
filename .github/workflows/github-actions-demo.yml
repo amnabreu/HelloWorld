@@ -43,12 +43,12 @@ jobs:
 
       - id: docker-push-tagged
         name: Tag Docker image and push to Google Artifact Registry
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           push: true
           tags: |
             asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}
-            asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest
+          labels: "1.0.0"
 
       - name: Artifact ready notification
         uses: fjogeleit/http-request-action@v1
@@ -56,4 +56,5 @@ jobs:
           url: 'https://api.breu.ngrok.io/providers/github/artifact-ready'
           method: 'POST'
           customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
-          data: '{"image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }}", "repo id": ${{github.repository_id}}, "repo name":${{github.repository}}}'
+          data: '{"pull_request_id": "${{github.event.pull_request.id}}","image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:${{ steps.vars.outputs.short_sha }} ","repo_id": "${{ github.repository_id}}","registry": "GCPArtifactRegistry","digest": "${{steps.docker-push-tagged.outputs.digest}}","installation_id": "${{ secrets.QUANTUM_APP_INSTALLATION_ID }}"}'
+
